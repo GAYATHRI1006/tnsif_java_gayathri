@@ -6,16 +6,13 @@
  new -> keyword
  */
 package basics.java; //The package name should be same as the package which contain this basicjava class error will through if the another package name is given like package javating
-//import statement is present
-import java.util.*;
 public class BasicJava {
-static //declaration of variable
+//declaration of variable
 	String name;
 	int age;
 	public static void main(String[] args) {
 		BasicJava obj = new BasicJava(); //class_name obj = reference_class_name();reference_class_name is a name of another class if we need to connect the two class
 		obj.name="Gayathri";
-		System.out.println("Name is" + name);
-	}
-	
+		System.out.println("Name is" + obj.name);
+	}	
 }
