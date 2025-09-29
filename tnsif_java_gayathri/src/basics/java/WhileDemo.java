@@ -7,8 +7,6 @@ public class WhileDemo {
 		while(i<=100) {
 			System.out.println(i);
 			i++;
-
 		}
 	}
-
 }
