@@ -37,8 +37,8 @@ public class PolymorphismDemo {
 		System.out.println(mo.add(20, 50));
 		
 		
-//		AnimalDemo ad = new AnimalDemo();
-//		ad.sound();
+		AnimalDemo ad = new AnimalDemo();
+		ad.sound();
 		Cat c = new Cat();
 		c.sound();
 		
