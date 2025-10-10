@@ -1,6 +1,6 @@
-package com.gayathri.assignment;
-import com.gayathri.assignment.employees.*;
-import com.gayathri.assignment.utilities.*;
+package com.gayathri.assignmentone;
+import com.gayathri.assignmentone.employees.*;
+import com.gayathri.assignmentone.utilities.*;
 public class AssignmentMain {
 	public static void main(String[] args) {
         // Create Manager and Developer objects

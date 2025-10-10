@@ -1,4 +1,4 @@
-package com.gayathri.assignment.employees;
+package com.gayathri.assignmentone.employees;
 
 public class Manager extends Employee{
     private String dept;

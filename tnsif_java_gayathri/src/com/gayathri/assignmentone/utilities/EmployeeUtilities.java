@@ -1,5 +1,5 @@
-package com.gayathri.assignment.utilities;
-import com.gayathri.assignment.employees.*;
+package com.gayathri.assignmentone.utilities;
+import com.gayathri.assignmentone.employees.*;
 public class EmployeeUtilities {
 
     // Public method to print employee details
