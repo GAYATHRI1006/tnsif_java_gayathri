@@ -5,8 +5,7 @@ This repository contains Java programs and resources developed as part of the TN
 - Conducted by: TNS India Foundation
 - Program: C2TC Java Full Stack Training Program
 - Objective: To upskill students in Java programming and software development concepts.
-- Duration: [Add Dates or Training Period]
-- Mode: [Online/Offline, as relevant]
+- Mode: Offline
 ## 🏆 Learning Outcomes
 - Gained hands-on experience in Java programming.
 - Developed core concepts including OOP, exception handling, collections, and project building.
@@ -26,4 +25,4 @@ This repository contains Java programs and resources developed as part of the TN
 Special thanks to Capgemini for supporting the cause and to the TNS India Foundation for organizing the training program.
 ## 📫 Contact
 For queries or collaborations, please reach out via GitHub Issues.
-Add any extra details, batch info, and customize further after the file is created.
+
