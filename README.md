@@ -1,6 +1,4 @@
-# tnsif_java_gayathri
-This repository contains Java programs and resources developed as part of the TNSIF Java Training under the Corporate Social Responsibility (CSR) initiative of Capgemini, organized by the TNS India Foundation.
-## 📌 Project Overview
+
 - Initiative: Capgemini CSR Activity
 - Conducted by: TNS India Foundation
 - Program: C2TC Java Full Stack Training Program
