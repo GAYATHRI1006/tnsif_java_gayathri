@@ -1,0 +1,387 @@
+/* ====== Background Animation ====== */
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #1a1a2e);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  overflow-x: hidden;
+  position: relative;
+
+  &:before {
+    transform: translate(
+      calc(-50% + (var(--mouse-x) - 50%) * 0.1),
+      calc((var(--mouse-y) - 50%) * 0.1)
+    ) rotateZ(var(--rotation));
+  }
+  
+  &:after {
+    transform: translate(
+      calc(-50% + (var(--mouse-x) - 50%) * 0.15),
+      calc((var(--mouse-y) - 50%) * 0.15)
+    ) rotateZ(var(--rotation));
+  }
+}
+
+body::before,
+body::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  min-width: 300vw;
+  min-height: 300vw;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  animation-name: rotate;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  transition: transform 0.3s ease-out;
+  will-change: transform;
+}
+
+body::before {
+  bottom: 15vh;
+  border-radius: 45%;
+  animation-duration: 10s;
+}
+
+body::after {
+  bottom: 12vh;
+  opacity: .5;
+  border-radius: 47%;
+  animation-duration: 10s;
+}
+
+@keyframes rotate {
+  0% {
+    --rotation: 0deg;
+  }
+  50% {
+    --rotation: 180deg;
+  }
+  100% {
+    --rotation: 360deg;
+  }
+}
+
+/* ====== Gradient Animation ====== */
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ====== Spotlight Effect ====== */
+.spotlight {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--mouse-x) var(--mouse-y),
+    rgba(102, 126, 234, 0.2) 0%,
+    transparent 20%
+  );
+  mix-blend-mode: screen;
+  z-index: 2;
+}
+
+/* ====== Floating Particles ====== */
+.particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 100%);
+  }
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  animation: float 20s infinite linear;
+  filter: blur(1px);
+  
+  @for $i from 1 through 75 {
+    &:nth-child(#{$i}) {
+      $size: random(8) + 1px;
+      width: $size;
+      height: $size;
+      left: random(100) * 1%;
+      top: random(100) * 1%;
+      animation-delay: random(20) * -1s;
+      animation-duration: (random(20) + 15) * 1s;
+      opacity: random(60) * 0.01 + 0.2;
+      
+      $glow-size: $size * 3;
+      $color: if($i < 19, 
+                 #667eea,  // purple-blue
+                 if($i < 38, 
+                    #f093fb,  // pink
+                    if($i < 57, 
+                       #4facfe,  // cyan
+                       #00f2fe   // bright cyan
+                    )
+                 )
+              );
+      
+      box-shadow: 
+        0 0 $glow-size rgba($color, 0.6),
+        0 0 $glow-size * 2 rgba($color, 0.4),
+        0 0 $glow-size * 3 rgba($color, 0.2);
+        
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: $size * 2;
+        height: $size * 2;
+        background: radial-gradient(circle at center, rgba($color, 0.8) 0%, transparent 100%);
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-100px) translateX(100px) rotate(120deg);
+  }
+  66% {
+    transform: translateY(50px) translateX(-50px) rotate(240deg);
+  }
+  100% {
+    transform: translateY(0) translateX(0) rotate(360deg);
+  }
+}
+
+/* ====== Modal Backdrop ====== */
+.modal-backdrop {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  animation: backdropFade 0.5s ease forwards;
+}
+
+@keyframes backdropFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ====== Modal Window ====== */
+.modal-content {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 247, 255, 0.98) 100%);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 40px;
+  border: 2px solid rgba(102, 126, 234, 0.2);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3),
+              0 0 40px rgba(102, 126, 234, 0.15),
+              inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transform: scale(0.85) translateY(30px);
+  opacity: 0;
+  animation: modalIn 0.4s ease forwards;
+}
+
+@keyframes modalIn {
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  border-bottom: 2px solid rgba(102, 126, 234, 0.15);
+  text-align: center;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.modal-title {
+  font-size: 32px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+  animation: text-glow 3s infinite alternate;
+}
+
+@keyframes text-glow {
+  from { 
+    filter: drop-shadow(0 2px 8px rgba(102, 126, 234, 0.3));
+    transform: translateY(0);
+  }
+  to { 
+    filter: drop-shadow(0 4px 12px rgba(102, 126, 234, 0.5));
+    transform: translateY(-1px);
+  }
+}
+
+.modal-body {
+  padding: 25px 0;
+  font-size: 16px;
+  line-height: 1.8;
+  color: #2d3748;
+  font-weight: 400;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 20px;
+  gap: 15px;
+}
+
+/* ====== Close Button ====== */
+button[type='button'].btn-close {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  color: #667eea;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0.7;
+  
+  &:hover {
+    color: #764ba2;
+    transform: rotate(90deg) scale(1.15);
+    opacity: 1;
+  }
+}
+
+/* ====== Modal Buttons ====== */
+.modal-footer button {
+  min-width: 120px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.modal-footer .btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  color: #fff;
+  box-shadow: 0 5px 20px rgba(102, 126, 234, 0.5);
+}
+
+.modal-footer .btn-primary:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.7);
+}
+
+.modal-footer .btn-danger {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  border: none;
+  color: #fff;
+  box-shadow: 0 5px 20px rgba(240, 147, 251, 0.5);
+}
+
+.modal-footer .btn-danger:hover {
+  background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(240, 147, 251, 0.7);
+}
+
+/* ====== Form Container ====== */
+.form-container {
+  background: rgba(15, 12, 41, 0.8);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  width: 400px;
+}
+.form-container h4{
+  color: aliceblue;
+}
+
+/* ====== Form Styling ====== */
+.form-group {
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.form-group label {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  display: block;
+  filter: drop-shadow(0 0 8px rgba(102, 126, 234, 0.5));
+}
+
+.form-control {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(102, 126, 234, 0.4);
+  border-radius: 10px;
+  padding: 12px 15px;
+  color: #fff;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  background: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+  border-color: #667eea;
+  outline: none;
+}
+
+/* ====== Submit Button ====== */
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  color: #fff;
+  padding: 12px 25px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(102, 126, 234, 0.7);
+}
+
+/* ====== Mouse Interaction ====== */
+:root {
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+  --attraction-strength: 30px;
+}
+
+#particle-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
